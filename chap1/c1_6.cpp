@@ -16,16 +16,16 @@ void d() {
 
 void rotate() {
   for (int i = 0; i < kLength/2; i++) {
-    int first = i;
     int last = kLength -1 -i;
-    for (int j = first; j < last; j++) {
-      int offset = j - first;
-      int t = image[first][j];
 
-      image[first][j] = image[j][last]; // top <- right
+    for (int j = i; j < last; j++) {
+      int offset = j - i;
+      int t = image[i][j];
+
+      image[i][j] = image[j][last]; // top <- right
       image[j][last] = image[last][last-offset]; // right <- bottom
-      image[last][last-offset] = image[last-offset][first]; // bottom <- left
-      image[last-offset][first] = t; // left <- top
+      image[last][last-offset] = image[last-offset][i]; // bottom <- left
+      image[last-offset][i] = t; // left <- top
     }
   }
 }
