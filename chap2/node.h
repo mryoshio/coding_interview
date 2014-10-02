@@ -24,17 +24,21 @@ public:
   void set_next(Node* next) { this->next = next; }
 };
 
-int main() {
+Node* create_list() {
   srand((unsigned int)time(NULL));
 
   Node* node = new Node(rand() % 100);
 
-  for (int i = 0; i < list_size; i++)
+  for (int i = 0; i < list_size-1; i++)
     node->append_to_tail(rand() % 100);
 
-  while (node->get_next() != nullptr)
-    node = node->get_next();
+  Node* t = node;
+  cout << t->get_data();
+  while (t->get_next() != nullptr) {
+    t = t->get_next();
+    cout << " -> " << t->get_data();
+  }
+  cout << endl;
 
-  return 0;
+  return node;
 }
-
