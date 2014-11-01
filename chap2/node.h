@@ -24,6 +24,16 @@ public:
   void set_next(Node* next) { this->next = next; }
 };
 
+void dump_list(Node* n) {
+  Node* t = n;
+  cout << t->get_data();
+  while (t->get_next() != nullptr) {
+    t = t->get_next();
+    cout << " -> " << t->get_data();
+  }
+  cout << endl;
+}
+
 Node* create_list() {
   srand((unsigned int)time(NULL));
 
@@ -33,12 +43,6 @@ Node* create_list() {
     node->append_to_tail(rand() % 100);
 
   Node* t = node;
-  cout << t->get_data();
-  while (t->get_next() != nullptr) {
-    t = t->get_next();
-    cout << " -> " << t->get_data();
-  }
-  cout << endl;
 
   return node;
 }
