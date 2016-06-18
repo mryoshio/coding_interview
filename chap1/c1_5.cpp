@@ -7,35 +7,38 @@ string compress(string str) {
   int cnt = 0;
   string compressed;
   stringstream ss;
-  string::iterator s = str.begin();;
-  char c = *s;
-  for (; s != str.end(); s++) {
+  char c = *str.begin();
+
+  for (string::iterator s = str.begin();; s++) {
+    if (s == str.end()) {
+      compressed.append(1, c);
+      ss << cnt; compressed.append(ss.str());
+      if (str.size() > compressed.size()) return compressed;
+      else return str;
+    }
+
     if (*s == c) {
       cnt++;
-    } else {
-      compressed.append(1, c);
-      ss << cnt;
-      compressed.append(ss.str());
-      ss.str("");
-      ss.clear();
-      cnt = 1;
-      c = *s;
+      continue;
     }
-  }
-  compressed.append(1, c);
-  ss << cnt;
-  compressed.append(ss.str());
 
-  if (str.size() > compressed.size())
-    return compressed;
-  return str;
+    compressed.append(1, c);
+    ss << cnt; compressed.append(ss.str());
+    ss.str(""); ss.clear();
+    cnt = 1;
+    c = *s;
+  }
 }
 
 int main() {
-  string s;
-  s = "aabbcccccaa";
-  cout << compress(s) << endl;
-  s = "abcccca";
-  cout << compress(s) << endl;
+  string strings[] = {
+    "aabbbbbbbccccdddddddcaa",
+    "aabbcccccaa",
+    "abcccca",
+    "abcde"
+  };
+
+  for (int i = 0; i < 4; i++)
+    cout << strings[i] << " -> " << compress(strings[i]) << endl;
   return 0;
 }
