@@ -2,6 +2,7 @@
 using namespace std;
 
 bool is_anagram(string s1, string s2) {
+  if (s1.size() != s2.size()) return false;
   int sum = 0;
   for (int i = 0; i < s1.size(); i++) {
     sum += s1[i];

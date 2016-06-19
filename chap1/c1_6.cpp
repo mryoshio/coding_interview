@@ -35,8 +35,8 @@ int main() {
   string s;
   int r = 0;
   while(getline(ifs, s)) {
-    for (int i = 0; i < s.size(); i++)
-      image[r][i] = s[i];
+    for (int col = 0; col < s.size(); col++)
+      image[r][col] = s[col];
     r++;
   }
   d();
