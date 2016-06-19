@@ -3,9 +3,7 @@
 using namespace std;
 
 bool isSubstring(string s1, string s2) {
-  int i = s1.find(s2);
-  if (i == string::npos)
-    return false;
+  if (s1.find(s2) == string::npos) return false;
   return true;
 }
 
