@@ -1,5 +1,5 @@
-#include <iostream>
 #include <ctime>
+#include <iostream>
 using namespace std;
 
 class Node {
@@ -40,4 +40,29 @@ Node* create_list(int size, int max_value) {
   }
 
   return n;
+}
+
+Node* create_circular_list(int size, int max_value, int circle_size) {
+  Node *n = create_list(size, max_value);
+  Node *t = n;
+  Node *h = n;
+
+  for (int i = 0; i < size - 1; i++) {
+    if (i < size - circle_size) t = t->next;
+    n = n->next;
+  }
+
+  int begin_circle = t->data;
+  n->next = t;
+  n = h;
+
+  for (int i = 0; i < size + circle_size + 1; i++) {
+    if (i) cout << " -> ";
+    if (n->data == begin_circle) cout << "[" << n->data << "]";
+    else cout << n->data;
+    n = n->next;
+  }
+  cout << " ..." << endl;
+
+  return h;
 }
