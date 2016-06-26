@@ -1,5 +1,6 @@
 #include <ctime>
 #include <iostream>
+#include <stack>
 using namespace std;
 
 class Node {
@@ -40,6 +41,29 @@ Node* create_list(int size, int max_value) {
   }
 
   return n;
+}
+
+Node* create_palindrome_list(int size, int max_value) {
+  if (size == 1) return create_list(1, max_value);
+
+  Node *n = create_list(size / 2, max_value);
+  Node *h = n;
+  stack<int> ST;
+
+  while (n->next != nullptr) {
+    ST.push(n->data);
+    n = n->next;
+  }
+
+  ST.push(n->data);
+  if (size % 2) n->append_to_tail(rand() % max_value);
+
+  while (!ST.empty()) {
+    n->append_to_tail(ST.top());
+    ST.pop();
+  }
+
+  return h;
 }
 
 Node* create_circular_list(int size, int max_value, int circle_size) {
