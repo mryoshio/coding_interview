@@ -1,30 +1,30 @@
 #include <iostream>
 #include "./node.h"
+
 using namespace std;
 
 void delete_dup(Node* n) {
-  Node *f = n->get_next();
+  Node *f = n->next;
   Node *s = n;
 
   while (f != nullptr) {
     while (s != f) {
-      if (s->get_data() == f->get_data()) {
-        cout << "[dup] " << f->get_data() << endl;
+      if (s->data == f->data) {
+        cout << "[dup] " << f->data << endl;
         Node *t = s;
-        while (t->get_next() != f)
-          t = t->get_next();
-        t->set_next(f->get_next());
+        while (t->next != f) t = t->next;
+        t->next = f->next;
         break;
       }
-      s = s->get_next();
+      s = s->next;
     }
-    f = f->get_next();
+    f = f->next;
     s = n;
   }
 }
 
 int main() {
-  Node* n = create_list();
+  Node *n = create_list(10, 10);
   dump_list(n);
   delete_dup(n);
   dump_list(n);

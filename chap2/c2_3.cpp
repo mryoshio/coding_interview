@@ -2,25 +2,23 @@
 #include "./node.h"
 using namespace std;
 
-void delete_mid(Node* n, int t) {
-  int cnt = 0;
-  Node* nn = n->get_next();
-  while (nn != nullptr && nn->get_data() != t) {
-    nn = nn->get_next();
-    n = n->get_next();
-  }
-  if (nn->get_data() == t)
-    n->set_next(nn->get_next());
+void delete_mid(Node* n) {
+  int c = 1;
+
+  for (Node* nn = n; nn->next != nullptr; nn = nn->next) c++;
+
+  for (int i = 1; i < c/2; i++)
+    if (n->next != nullptr) n = n->next;
+
+  cout << "delete: " << n->next->data << endl;
+
+  n->next = n->next->next;
 }
 
 int main() {
-  Node *n = create_list();
-  Node *mid = n;
-  for (int i = 0; i < 5; i++)
-    mid = mid->get_next();
+  Node *n = create_list(7, 100);
   dump_list(n);
-  cout << "delete: " << mid->get_data() << endl;
-  delete_mid(n, mid->get_data());
+  delete_mid(n);
   dump_list(n);
   return 0;
 }

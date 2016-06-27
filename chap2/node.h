@@ -1,48 +1,92 @@
-#include <iostream>
 #include <ctime>
+#include <iostream>
+#include <stack>
 using namespace std;
 
-const int list_size = 10;
-
 class Node {
+ public:
   Node* next;
   int data;
 
-public:
+  Node() {};
   Node(int d) { data = d; next = nullptr; };
   ~Node() {}
 
   void append_to_tail(int d) {
-    Node* end = new Node(d);
-    Node* n = this;
-    while (n->get_next() != nullptr)
-      n = n->get_next();
-    n->set_next(end);
+    Node* new_n = new Node(d);
+    Node* t = this;
+    while (t->next != nullptr) t = t->next;
+    t->next = new_n;
   }
-  int get_data() { return data; };
-  Node* get_next() { return next; };
-  void set_next(Node* next) { this->next = next; }
 };
 
 void dump_list(Node* n) {
-  Node* t = n;
-  cout << t->get_data();
-  while (t->get_next() != nullptr) {
-    t = t->get_next();
-    cout << " -> " << t->get_data();
+  Node* cur_n = n;
+  while (cur_n != nullptr) {
+    if (static_cast<void*>(cur_n) != static_cast<void*>(n)) cout << " -> ";
+    cout << cur_n->data;
+    cur_n = cur_n->next;
   }
   cout << endl;
 }
 
-Node* create_list() {
+Node* create_list(int size, int max_value) {
   srand((unsigned int)time(NULL));
 
-  Node* node = new Node(rand() % 100);
+  Node* n = new Node(rand() % max_value);
 
-  for (int i = 0; i < list_size-1; i++)
-    node->append_to_tail(rand() % 100);
+  for (Node* t = n; size-1; size--) {
+    t->append_to_tail(rand() % max_value);
+    t = t->next;
+  }
 
-  Node* t = node;
+  return n;
+}
 
-  return node;
+Node* create_palindrome_list(int size, int max_value) {
+  if (size == 1) return create_list(1, max_value);
+
+  Node *n = create_list(size / 2, max_value);
+  Node *h = n;
+  stack<int> ST;
+
+  while (n->next != nullptr) {
+    ST.push(n->data);
+    n = n->next;
+  }
+
+  ST.push(n->data);
+  if (size % 2) n->append_to_tail(rand() % max_value);
+
+  while (!ST.empty()) {
+    n->append_to_tail(ST.top());
+    ST.pop();
+  }
+
+  return h;
+}
+
+Node* create_circular_list(int size, int max_value, int circle_size) {
+  Node *n = create_list(size, max_value);
+  Node *t = n;
+  Node *h = n;
+
+  for (int i = 0; i < size - 1; i++) {
+    if (i < size - circle_size) t = t->next;
+    n = n->next;
+  }
+
+  int begin_circle = t->data;
+  n->next = t;
+  n = h;
+
+  for (int i = 0; i < size + circle_size + 1; i++) {
+    if (i) cout << " -> ";
+    if (n->data == begin_circle) cout << "[" << n->data << "]";
+    else cout << n->data;
+    n = n->next;
+  }
+  cout << " ..." << endl;
+
+  return h;
 }
