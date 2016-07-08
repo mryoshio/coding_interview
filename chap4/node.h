@@ -8,6 +8,19 @@ public:
   Node(int d): data(d), leftChild(nullptr), rightChild(nullptr) {}
 };
 
+Node* makeBST(Node* parent, int maxVal, int depth) {
+  if (depth == 0) return nullptr;
+  depth--;
+
+  parent->leftChild = new Node(parent->data - rand() % maxVal);
+  parent->rightChild = new Node(parent->data + rand() % maxVal);
+
+  makeBST(parent->leftChild, maxVal, depth);
+  makeBST(parent->rightChild, maxVal, depth);
+
+  return parent;
+}
+
 Node* makeBalancedBT(Node* parent, int maxVal, int depth) {
   if (depth == 0) return nullptr;
   depth--;
@@ -25,7 +38,7 @@ Node* makeUnbalancedBT(Node* parent, int maxVal, int depth) {
   if (depth == 0) {
     parent->rightChild = new Node(rand() % maxVal);
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
       parent->leftChild = new Node(rand() % maxVal);
       parent = parent->leftChild;
     }

@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <iostream>
 #include <vector>
 #include "node.h"
@@ -16,7 +15,7 @@ void traceTree(Node* n, int d) {
 }
 
 void solve() {
-  int d = 2;
+  int d = 3;
 
   cout << "----------- Tree" << endl;
   Node* n = makeBalancedBT(new Node(13), 50, d);
