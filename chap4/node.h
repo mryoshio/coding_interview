@@ -27,8 +27,8 @@ Node* makeBalancedBT(Node* parent, int maxVal, int depth) {
   if (depth == 0) return nullptr;
   depth--;
 
-  parent->leftChild = new Node(rand() % maxVal);
-  parent->rightChild = new Node(rand() % maxVal);
+  parent->leftChild = new Node(rand() % maxVal, parent);
+  parent->rightChild = new Node(rand() % maxVal, parent);
 
   makeBalancedBT(parent->leftChild, maxVal, depth);
   makeBalancedBT(parent->rightChild, maxVal, depth);
